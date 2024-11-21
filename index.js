@@ -18,7 +18,7 @@ app.use(express.json());
 app.get('/Customer', async (req, res) => {
   try {
     console.log('try to fetch');
-    const allTodos = await todoRepository.getAllTodos();
+    const allTodos = await customerRepository.getAllTodos();
     console.log('get all todos ', allTodos);
     res.json(allTodos);
   } catch (err) {
@@ -30,7 +30,7 @@ app.get('/Customer', async (req, res) => {
 app.get('/customer/:id', async (req, res) => {
   try {
     const { id } = req.params;
-    const customer = await todoRepository.getCustomerById(id);
+    const customer = await customerRepository.getCustomerById(id);
     console.log("get customer by id ", customer);
     res.json(todo);
   } catch (err) {
@@ -42,7 +42,7 @@ app.get('/customer/:id', async (req, res) => {
 app.post('/customer', async (req, res) => {
   try {
     const { Lname, Fname, DOB, pnumber, gender, email } = req.body;
-    const newCustomer = await todoRepository.insertCustomer(Lname, Fname, DOB, pnumber, gender, email);
+    const newCustomer = await customerRepository.insertCustomer(Lname, Fname, DOB, pnumber, gender, email);
     console.log("insert customer ", newCustomer);
     res.json(newTodo);
   } catch (err) {
