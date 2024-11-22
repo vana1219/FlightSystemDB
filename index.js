@@ -3,8 +3,8 @@ const app = express();
 const cors = require('cors');
 
 const AppDAO = require('./DAO');
-const Repository = require('./Repository');
-const Customer = require('./model');
+const Repository = require('./repositiory');
+//const Customer = require('./model');
 
 app.use(express.static('public'));
 
@@ -17,34 +17,34 @@ app.use(express.json());
 //get all todo
 app.get('/Customer', async (req, res) => {
   try {
-    console.log('try to fetch');
-    const allTodos = await customerRepository.getAllTodos();
-    console.log('get all todos ', allTodos);
-    res.json(allTodos);
+    console.log('try to fetch'); 
+    const allCustomers = await customerRepository.getAllCustomers();
+    console.log('get all todos ', allCustomers);
+    res.json(allCustomers); 
   } catch (err) {
     console.log(err.message);
   }
 });
 
 //get a todo by id
-app.get('/customer/:id', async (req, res) => {
+app.get('/Customer/:id', async (req, res) => {
   try {
     const { id } = req.params;
     const customer = await customerRepository.getCustomerById(id);
     console.log("get customer by id ", customer);
-    res.json(todo);
+    res.json(customer);
   } catch (err) {
     console.log(err.message);
   }
 });
 
 //insert a todo
-app.post('/customer', async (req, res) => {
+app.post('/Customer', async (req, res) => {
   try {
     const { Lname, Fname, DOB, pnumber, gender, email } = req.body;
     const newCustomer = await customerRepository.insertCustomer(Lname, Fname, DOB, pnumber, gender, email);
     console.log("insert customer ", newCustomer);
-    res.json(newTodo);
+    res.json(newCustomer);
   } catch (err) {
     console.log(err.message);
   }
@@ -59,6 +59,6 @@ const dao = new AppDAO();
 const customerRepository = new Repository(dao);
 customerRepository.createTable();
 
-app.listen(5500, () => {
-  console.log('server has started on port 5500');
+app.listen(3000, () => {
+  console.log('server has started on port 3000');
 });

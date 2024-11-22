@@ -57,6 +57,5 @@ class Customer {
         this.DOB = DOB;
       } 
 
-  }
-  
-  module.exports = Todo;
+  } 
+  module.exports = Customer; 
