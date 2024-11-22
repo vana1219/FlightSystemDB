@@ -37,7 +37,7 @@ async function selectCustomer() {
   try {
     console.log('try to select');
     // GET all todos from "http://localhost:3000/todos"
-    const response = await fetch('http://127.0.0.1:5500/Public/index.html', {
+    const response = await fetch('http://localhost:3000/Customer', {
       // const response = await fetch("/todos", {
       method: 'GET',
       headers: { 'Content-Type': 'application/json' },
@@ -56,7 +56,7 @@ async function selectCustomer() {
 async function insertCustomer() {
     const inputBox = document.querySelector('#Fname'); // Match the corrected HTML id
     const Fname = inputBox.value.trim(); // Trim whitespace
-  
+    console.log(Fname);
     if (!Fname) {
       alert('First Name cannot be empty.');
       return;
@@ -64,7 +64,7 @@ async function insertCustomer() {
   
     try {
       const body = { Fname: Fname };
-      const response = await fetch('http://127.0.0.1:5500/Public/index.html', {
+      const response = await fetch('http://localhost:3000/Customer', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(body),
