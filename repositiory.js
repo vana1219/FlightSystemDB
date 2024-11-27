@@ -1,4 +1,5 @@
 const queries = require('./queries');
+//import queries from './queries.js';
 
 class Repository {
   constructor(dao) {
@@ -21,5 +22,5 @@ class Repository {
     return this.dao.run(queries.selectCustomer, []);
   }
 }
-
+//export default Repository;
 module.exports = Repository;

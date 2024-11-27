@@ -11,7 +11,6 @@ class AppDAO {
       port: '3306', // Your MySQL port, normally "3306"
       database: 'test', // DO NOT EDIT (You need to create a "test" database from your "MySQL Workbench")
     });
-
     // Connect to the database
     this.connection.connect((err) => {
       if (err) {
