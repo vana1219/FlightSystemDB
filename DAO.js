@@ -1,5 +1,5 @@
-const mysql = require('mysql2');
-const Promise = require('bluebird');
+import mysql from 'mysql2';
+import Promise from 'bluebird';
 
 class AppDAO {
   constructor() {
@@ -47,4 +47,4 @@ class AppDAO {
   }
 }
 
-module.exports = AppDAO;
+export default AppDAO;

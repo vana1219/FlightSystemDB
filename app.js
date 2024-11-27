@@ -1,15 +1,16 @@
-const express = require('express');
-const cors = require('cors');
-const path = require('path');
+import express from 'express';
+import cors from 'cors';
+import path from 'path';
+import { fileURLToPath } from 'url';
+import AppDAO from './DAO.js';
+import Repository from './repositiory.js';
+import { getFlights, getFlight } from './database.js';
 
-const AppDAO = require('./DAO');
-const Repository = require('./repositiory');
-const { getFlights, getFlight } = require('./database');
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const app = express();
 const port = 3000;
-
-app.use(express.static('public'));
 
 // Middleware
 app.use(cors());
@@ -25,15 +26,25 @@ customerRepository.createTable();
 // Get all flights
 app.get('/flights', async (req, res) => {
     console.log('Received request for /flights');
-    const flights = await getFlights();
-    res.json(flights);
+    try {
+        const flights = await getFlights();
+        res.json(flights);
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Internal Server Error');
+    }
 });
 
 // Get a flight by ID
 app.get('/flights/:id', async (req, res) => {
     console.log(`Received request for /flights/${req.params.id}`);
-    const flight = await getFlight(req.params.id);
-    res.json(flight);
+    try {
+        const flight = await getFlight(req.params.id);
+        res.json(flight);
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Internal Server Error');
+    }
 });
 
 // Get all customers
@@ -74,6 +85,14 @@ app.post('/customers', async (req, res) => {
         res.status(500).send('Server error');
     }
 });
+
+// Serve flight.html for the root route
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'flight.html'));
+});
+
+// Serve static files
+app.use(express.static('public'));
 
 // Serve index.html for any other routes
 app.get('*', (req, res) => {
