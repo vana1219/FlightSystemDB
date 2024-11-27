@@ -1,32 +1,40 @@
-const express = require('express');
+import express from 'express';
+import cors from 'cors';
+import path from 'path';
+import { fileURLToPath } from 'url';
+import AppDAO from './DAO.js';
+import Repository from './repositiory.js';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
 const app = express();
-const cors = require('cors');
 
-const AppDAO = require('./DAO');
-const Repository = require('./repositiory');
-//const Customer = require('./model');
-
-app.use(express.static('public'));
-
-// middleware
+// Middleware
 app.use(cors());
 app.use(express.json());
+app.use(express.static('public'));
 
-//ROUTES
+// Initialize DAO and Repository
+const dao = new AppDAO();
+const customerRepository = new Repository(dao);
+customerRepository.createTable();
 
-//get all todo
+// Routes
+
+// Get all customers
 app.get('/Customer', async (req, res) => {
   try {
-    console.log('try to fetch'); 
+    console.log('try to fetch');
     const allCustomers = await customerRepository.getAllCustomers();
     console.log('get all todos ', allCustomers);
-    res.json(allCustomers); 
+    res.json(allCustomers);
   } catch (err) {
     console.log(err.message);
   }
 });
 
-//get a todo by id
+// Get a customer by ID
 app.get('/Customer/:id', async (req, res) => {
   try {
     const { id } = req.params;
@@ -38,7 +46,7 @@ app.get('/Customer/:id', async (req, res) => {
   }
 });
 
-//insert a todo
+// Insert a new customer
 app.post('/Customer', async (req, res) => {
   try {
     const { Lname, Fname, DOB, pnumber, gender, email } = req.body;
@@ -48,17 +56,14 @@ app.post('/Customer', async (req, res) => {
   } catch (err) {
     console.log(err.message);
   }
-}); 
-
-app.get('*', function (req, res) {
-  path = __dirname + '/public/index.html';
-  res.sendFile(path);
 });
 
-const dao = new AppDAO();
-const customerRepository = new Repository(dao);
-customerRepository.createTable();
+// Serve index.html for any other routes
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'index.html'));
+});
 
+// Start the server
 app.listen(3000, () => {
   console.log('server has started on port 3000');
 });
