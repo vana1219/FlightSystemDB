@@ -5,8 +5,8 @@ class Repository {
     this.dao = dao;
   }
 
-  createTable() {
-    const sql = queries.createTable;
+  createCustomerTable() {
+    const sql = queries.createCustomerTable;
     return this.dao.run(sql);
   }
 
