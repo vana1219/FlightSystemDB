@@ -19,7 +19,7 @@ app.use(express.json());
 // Initialize DAO and Repository
 const dao = new AppDAO();
 const customerRepository = new Repository(dao);
-customerRepository.createTable();
+customerRepository.createCustomerTable();
 
 // Routes
 
